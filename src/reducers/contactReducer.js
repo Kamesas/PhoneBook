@@ -1,5 +1,5 @@
 export default function contactReducer (state = {}, action) {
-	// console.log('action --- ', action) 
+
    	switch (action.type) {
 
     	case "FETCH_CONTACTS":
@@ -7,6 +7,9 @@ export default function contactReducer (state = {}, action) {
 
       	case "ADD_CONTACT":
       		return [...state, action.payload];
+
+      	case "FETCH_CONTACTS_FIREBASE":
+      		return action.payload;
 
     	default:
       		return state;

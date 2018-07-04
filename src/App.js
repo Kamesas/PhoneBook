@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import _ from "lodash";
+import * as actions from "./actions/actionContacts";
 
 class App extends Component {
 
@@ -20,6 +22,10 @@ class App extends Component {
    });
   }
 
+  componentWillMount() {
+    this.props.fetchContacts();
+  }
+
   render() {
     return (
       <div className="App">
@@ -29,27 +35,34 @@ class App extends Component {
           {this.props.contactStore.map((contact, index) =>
             <li key={index}>{contact}</li>
           )}
+          <hr/>
+          { _.map(this.props.contactStore, (value, key) => 
+                <li key={key}>{value}</li>         
+          )}
         </ul>
       </div>
     );
   }
 }
 
-/*const mapStateToProps = (state) => {
-  return {
-    contactStore: state
-  };
-};
+/*export default connect(
 
-export default connect(mapStateToProps, null)(App);*/
-
-export default connect(
   state => ({
     contactStore: state.contactReducer
   }),
+
   dispatch => ({
     addContactDispatch: (contact) => {
       dispatch({type: 'ADD_CONTACT', payload: contact})
     }
   })
-)(App);
+
+)(App);*/
+
+const mapStateToProps = ({contactReducer}) => {
+  return {
+    contactStore: contactReducer
+  };
+};
+
+export default connect(mapStateToProps, actions)(App);
