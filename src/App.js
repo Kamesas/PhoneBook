@@ -13,8 +13,9 @@ class App extends Component {
     });
   }
 
-  addContact = () => {   
-   console.log(this.props.contactStore) 
+  addContact = () => {
+   this.props.addContactDispatch(this.state.nameValue);
+   this.state.nameValue = '';
   }
 
   render() {
@@ -23,8 +24,8 @@ class App extends Component {
         <input type="text" value={this.state.nameValue} onChange={this.nameChange} />
         <button onClick={this.addContact}>Add contact</button>
         <ul>
-          {this.props.contactStore.map(contact =>
-            <li>{contact}</li>
+          {this.props.contactStore.map((contact, index) =>
+            <li key={index}>{contact}</li>
           )}
         </ul>
       </div>
@@ -32,17 +33,21 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+/*const mapStateToProps = (state) => {
   return {
     contactStore: state
   };
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, null)(App);*/
 
-/*export default connect(
+export default connect(
   state => ({
     contactStore: state
   }),
-  dispatch => ({})
-)(App);*/
+  dispatch => ({
+    addContactDispatch: (contact) => {
+      dispatch({type: 'ADD_CONTACT', payload: contact})
+    }
+  })
+)(App);
