@@ -7,7 +7,7 @@ import reduxThunk from "redux-thunk";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
-function contacts (state = {}, action) { 
+function contacts (state = {}, action) {
 	console.log('action --- ', action) 
    	switch (action.type) {
     	case "FETCH_CONTACTS":
@@ -28,8 +28,8 @@ store.dispatch({
   payload: 'first contact'
 });
 store.dispatch({ 
-  type: 'FETCH_CONTACTS2',
-  payload: 'other contact'
+  type: 'FETCH_CONTACTS',
+  payload: 'second contact'
 });
 
 ReactDOM.render(
