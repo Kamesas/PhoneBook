@@ -6,30 +6,14 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import rootReducer from "./reducers/"
 
-function contacts (state = {}, action) {
-	console.log('action --- ', action) 
-   	switch (action.type) {
-    	case "FETCH_CONTACTS":
-      	return [...state, action.payload];
-      case "ADD_CONTACT":
-      	return [...state, action.payload];
-    	default:
-      	return state;
-  	}
-};
-
-const store = createStore(contacts, composeWithDevTools(applyMiddleware(reduxThunk)));
-
-store.subscribe(() => {
-	console.log('subscribe --- ', store.getState());
-})
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(reduxThunk)));
 
 store.dispatch({ 
   type: 'FETCH_CONTACTS',
   payload: 'first contact'
 });
-
 
 ReactDOM.render(
   <Provider store={store}>

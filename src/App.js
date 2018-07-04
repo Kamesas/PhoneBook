@@ -15,7 +15,9 @@ class App extends Component {
 
   addContact = () => {
    this.props.addContactDispatch(this.state.nameValue);
-   this.state.nameValue = '';
+   this.setState({
+    nameValue: ''
+   });
   }
 
   render() {
@@ -43,7 +45,7 @@ export default connect(mapStateToProps, null)(App);*/
 
 export default connect(
   state => ({
-    contactStore: state
+    contactStore: state.contactReducer
   }),
   dispatch => ({
     addContactDispatch: (contact) => {
