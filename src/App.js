@@ -6,7 +6,8 @@ import * as actions from "./actions/actionContacts";
 class App extends Component {
 
   state = {
-    nameValue: ''
+    nameValue: '',
+    phoneValue: ''
   }
 
   nameChange = (e) => {
@@ -15,10 +16,17 @@ class App extends Component {
     });
   }
 
+  phoneChange = (e) => {
+    this.setState({
+      phoneValue: e.target.value
+    });
+  }
+
   addContact = () => {
-   this.props.addContact({ name: this.state.nameValue});
+   this.props.addContact({ name: this.state.nameValue, phone: this.state.phoneValue});
    this.setState({
-    nameValue: ''
+    nameValue: '',
+    phoneValue: ''
    });
   }
 
@@ -29,12 +37,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <input type="text" value={this.state.nameValue} onChange={this.nameChange} />
+        <input type="text" value={this.state.nameValue} onChange={this.nameChange} />  
+        <input type="text" value={this.state.phoneValue} onChange={this.phoneChange} />
         <button onClick={this.addContact}>Add contact</button>
         <ul>
 
           { _.map(this.props.contactStore, (value, index) => 
-                <li key={index}>{value.name}</li>         
+                <li key={index}>{value.name} <br/> {value.phone}<hr/> </li>         
           )}
 
         </ul>
