@@ -32,32 +32,16 @@ class App extends Component {
         <input type="text" value={this.state.nameValue} onChange={this.nameChange} />
         <button onClick={this.addContact}>Add contact</button>
         <ul>
-          {this.props.contactStore.map((contact, index) =>
-            <li key={index}>{contact}</li>
+
+          { _.map(this.props.contactStore, (value, index) => 
+                <li key={index}>{value}</li>         
           )}
-          <hr/>
-          { _.map(this.props.contactStore, (value, key) => 
-                <li key={key}>{value}</li>         
-          )}
+
         </ul>
       </div>
     );
   }
 }
-
-/*export default connect(
-
-  state => ({
-    contactStore: state.contactReducer
-  }),
-
-  dispatch => ({
-    addContactDispatch: (contact) => {
-      dispatch({type: 'ADD_CONTACT', payload: contact})
-    }
-  })
-
-)(App);*/
 
 const mapStateToProps = ({contactReducer}) => {
   return {

@@ -10,11 +10,6 @@ import rootReducer from "./reducers/"
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(reduxThunk)));
 
-store.dispatch({ 
-  type: 'FETCH_CONTACTS',
-  payload: 'first contact'
-});
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
