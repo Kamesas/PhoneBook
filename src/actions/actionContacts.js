@@ -8,3 +8,7 @@ export const fetchContacts = () => async dispatch => {
     });
   });
 };
+
+export const addContact = newContact => async dispatch => {
+  firebaseContact.push().set(newContact);
+};

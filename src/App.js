@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   addContact = () => {
-   this.props.addContactDispatch(this.state.nameValue);
+   this.props.addContact({ name: this.state.nameValue});
    this.setState({
     nameValue: ''
    });
@@ -34,7 +34,7 @@ class App extends Component {
         <ul>
 
           { _.map(this.props.contactStore, (value, index) => 
-                <li key={index}>{value}</li>         
+                <li key={index}>{value.name}</li>         
           )}
 
         </ul>
