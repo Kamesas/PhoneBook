@@ -7,7 +7,30 @@ import reduxThunk from "redux-thunk";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
-const store = createStore(()=>{}, composeWithDevTools(applyMiddleware(reduxThunk)));
+function contacts (state = {}, action) { 
+	console.log('action --- ', action) 
+   	switch (action.type) {
+    	case "FETCH_CONTACTS":
+      	return [...state, action.payload];
+    	default:
+      	return state;
+  	}
+};
+
+const store = createStore(contacts, composeWithDevTools(applyMiddleware(reduxThunk)));
+
+store.subscribe(() => {
+	console.log('subscribe --- ', store.getState());
+})
+
+store.dispatch({ 
+  type: 'FETCH_CONTACTS',
+  payload: 'first contact'
+});
+store.dispatch({ 
+  type: 'FETCH_CONTACTS2',
+  payload: 'other contact'
+});
 
 ReactDOM.render(
   <Provider store={store}>
