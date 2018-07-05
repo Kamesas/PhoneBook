@@ -16,3 +16,15 @@ export const addContact = newContact => async dispatch => {
 export const removeContact = removeContactId => async dispatch => {
   firebaseContact.child(removeContactId).remove();
 };
+
+export const updateContact = (id, data) => async dispatch => {  
+  return firebaseContact
+    .child(id)
+    .update(data)
+    .then(() => firebaseContact.once('value'))
+    .then(snapshot => snapshot.val())
+    .catch(error => ({
+      errorCode: error.code,
+      errorMessage: error.message
+    }));
+}
