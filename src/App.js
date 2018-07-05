@@ -47,7 +47,7 @@ class App extends Component {
           
         </ul>
           { _.map(this.props.contactStore, (value, index) => 
-              <ContactInfo key={index} name={value.name} telNum={value.phone}/>         
+              <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>         
             )
           }         
         

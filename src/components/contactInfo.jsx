@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { removeContact } from "../actions/actionContacts";
 
 
 class ContactInfo extends Component {
+
+  handleCompleteClick = (removeContact) => {    
+    this.props.removeContact(removeContact);
+  };
 
   render() {
     return (
@@ -10,6 +16,7 @@ class ContactInfo extends Component {
         <p>
           <span> name: {this.props.name} </span><br/>         
           <span> telNum: {this.props.telNum} </span>
+          <button onClick={() => this.handleCompleteClick(this.props.contactId)} >&times;</button>
         </p>        
         <hr/>
 
@@ -18,4 +25,4 @@ class ContactInfo extends Component {
   }
 }
 
-export default ContactInfo;
+export default connect(null, { removeContact })(ContactInfo);

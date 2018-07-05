@@ -12,3 +12,7 @@ export const fetchContacts = () => async dispatch => {
 export const addContact = newContact => async dispatch => {
   firebaseContact.push().set(newContact);
 };
+
+export const removeContact = removeContactId => async dispatch => {
+  firebaseContact.child(removeContactId).remove();
+};
