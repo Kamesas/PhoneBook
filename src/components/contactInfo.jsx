@@ -11,8 +11,8 @@ class ContactInfo extends Component {
   };
 
   handleUpdateClick = (id, data) => {    
-    //this.props.updateContact(id, data);
-    console.log('update')
+    this.props.updateContact(id, {name: "Alex"});
+    console.log('update', id, data)
   };
 
   render() {
@@ -24,7 +24,7 @@ class ContactInfo extends Component {
           <span> telNum: {this.props.telNum} </span>
           <button onClick={() => this.handleRemoveClick(this.props.contactId)} >&times;</button>
 
-          <button onClick={() => this.handleUpdateClick(this.props.contactId )} >Edit</button>
+          <button onClick={() => this.handleUpdateClick(this.props.contactId, {name: this.props.name, phone: this.props.telNum } )} >Edit</button>
          
         </p>        
         <hr/>
