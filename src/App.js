@@ -8,7 +8,9 @@ class App extends Component {
 
   state = {    
     nameValue: '',
-    phoneValue: ''
+    phoneValue: '',
+    searchValue: '',
+    displayContacts: ''
   } 
 
   nameChange = (e) => {
@@ -31,14 +33,36 @@ class App extends Component {
    });
   } 
 
+  handleSearch = (e) => {   
+    const arrContact =  _.map(this.props.contactStore, (value, index) => 
+                          <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>         
+                        ) 
+    console.log("arrContact", arrContact);   
+   
+    const displayContacts = arrContact.filter((el) =>      
+      el.props.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+    ) 
+    this.setState({
+      searchValue: e.target.value,
+      displayContacts: displayContacts
+    });
+    console.log('displayContacts',displayContacts)
+  }
+
   componentWillMount() {
     this.props.fetchContacts();    
   } 
 
-  render() {   
+  render() { 
+
+    const startListContact = _.map(this.props.contactStore, (value, index) => 
+              <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>         
+            );   
 
     return (
-      <div className="App">             
+      <div className="App"> 
+
+        <input type="text" onChange={this.handleSearch} placeholder="search"/>            
        
         <input type="text" value={this.state.nameValue} onChange={this.nameChange} />  
         <input type="text" value={this.state.phoneValue} onChange={this.phoneChange} />
@@ -46,10 +70,10 @@ class App extends Component {
         <ul>
           
         </ul>
-          { _.map(this.props.contactStore, (value, index) => 
-              <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>         
-            )
-          }         
+          { this.state.searchValue === '' ? startListContact : this.state.displayContacts } 
+          {/*<br/><hr/>
+          {this.state.displayContacts} */}
+
         
       </div>
     );

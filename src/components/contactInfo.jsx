@@ -9,7 +9,7 @@ class ContactInfo extends Component {
   state = {
     edit: false,
     nameEdit: "",
-    phoneEdit: ""
+    phoneEdit: ""   
   }
 
   handleRemoveClick = (removeContact) => {    
@@ -23,14 +23,15 @@ class ContactInfo extends Component {
   }
 
   nameEditChange = (e) => {
-   this.setState({            
+    console.log(typeof(e.target.value))
+    this.setState({            
       nameEdit: e.target.value      
     });
   } 
 
   phoneEditChange = (e) => {
     this.setState({            
-      phoneEdit: e.target.value      
+      phoneEdit: e.target.value    
     });
   }
 
@@ -72,7 +73,7 @@ class ContactInfo extends Component {
       <div>
 
         { !this.state.edit ? start : editInputs }                
-        <hr/>
+        <hr/>     
 
       </div>
     );
