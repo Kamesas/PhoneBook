@@ -35,18 +35,21 @@ class App extends Component {
 
   handleSearch = (e) => {   
     const arrContact =  _.map(this.props.contactStore, (value, index) => 
-                          <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>         
-                        ) 
-    console.log("arrContact", arrContact);   
+                          <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>
+                        );
    
     const displayContacts = arrContact.filter((el) =>      
-      el.props.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
-    ) 
+      el.props.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1 ||
+      el.props.telNum.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+    ); 
+
     this.setState({
       searchValue: e.target.value,
       displayContacts: displayContacts
     });
-    console.log('displayContacts',displayContacts)
+
+    console.log(displayContacts)
+
   }
 
   componentWillMount() {
@@ -70,10 +73,7 @@ class App extends Component {
         <ul>
           
         </ul>
-          { this.state.searchValue === '' ? startListContact : this.state.displayContacts } 
-          {/*<br/><hr/>
-          {this.state.displayContacts} */}
-
+          { this.state.searchValue === '' ? startListContact : this.state.displayContacts }             
         
       </div>
     );
