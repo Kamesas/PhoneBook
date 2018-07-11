@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { removeContact } from "../actions/actionContacts";
 import { updateContact } from "../actions/actionContacts";
+import axios from "axios";
 
 
 class ContactInfo extends Component {
@@ -9,7 +10,8 @@ class ContactInfo extends Component {
   state = {
     edit: false,
     nameEdit: "",
-    phoneEdit: ""   
+    phoneEdit: "",
+    selectedFile: null   
   }
 
   handleRemoveClick = (removeContact) => {    
@@ -55,11 +57,26 @@ class ContactInfo extends Component {
    
   };
 
+  fileSelectedHandler = (e) => {
+    console.log(e.target.files[0]);
+    this.setState({
+      selectedFile: e.target.files[0] 
+    });
+  }
+
+  fileUploadHandler = () => {
+
+  }
+
   render() {
 
     const start = <p>
                     <span> name: {this.props.name} </span><br/>         
-                    <span> telNum: {this.props.telNum} </span>
+                    <span> telNum: {this.props.telNum} </span><br/>
+
+                    <input type="file" onChange={this.fileSelectedHandler}/>
+                    <button onClick={this.fileUploadHandler}>Upload</button>
+
                     <button onClick={() => this.handleRemoveClick(this.props.contactId)} >&times;</button>
                     <button onClick={() => this.handleUpdateClick(this.props.contactId, {name: this.props.name, phone: this.props.telNum } )} >Edit</button>                             
                   </p>;

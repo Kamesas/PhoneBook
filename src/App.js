@@ -63,10 +63,9 @@ class App extends Component {
             );   
 
     return (
-      <div className="App"> 
-
+      <div className="App">         
         <input type="text" onChange={this.handleSearch} placeholder="search"/>            
-       
+        <br/>
         <input type="text" value={this.state.nameValue} onChange={this.nameChange} />  
         <input type="text" value={this.state.phoneValue} onChange={this.phoneChange} />
         <button onClick={this.addContact}>Add contact</button>
