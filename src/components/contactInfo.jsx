@@ -65,7 +65,7 @@ class ContactInfo extends Component {
   }
 
   fileUploadHandler = () => {
-
+    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/helloWorld')
   }
 
   render() {

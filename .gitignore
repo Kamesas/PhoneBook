@@ -4,7 +4,7 @@
 /node_modules
 
 #firebase functions
-/functions
+/functions/node_modules
 
 # testing
 /coverage
