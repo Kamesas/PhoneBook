@@ -10,7 +10,8 @@ class App extends Component {
     nameValue: '',
     phoneValue: '',
     searchValue: '',
-    displayContacts: ''
+    displayContacts: '',
+    inputError: 'initial'
   } 
 
   nameChange = (e) => {
@@ -20,27 +21,35 @@ class App extends Component {
   }
 
   phoneChange = (e) => {
-    // const rexExp = /[^\d]/g;
-    // if (e.target.value.search(rexExp) !== -1) {
-    //   this.setState({
-    //     phoneValue: e.target.value        
-    //   });
-    // }else{
-    //   console.log("не верный номер")
-    // }
+    const rexExp = /^(\d){0,15}$/ ;   
+    if (e.target.value.search(rexExp) !== -1) {
+      this.setState({
+        phoneValue: e.target.value,
+        inputError: 'green'        
+      });
+    }else{
+      this.setState({       
+        inputError: 'red'
+      });     
+    }
 
-    this.setState({
-      phoneValue: e.target.value.replace(/[^\d]/g,'').substr(0,15) 
-    });
+    // this.setState({
+    //   phoneValue: e.target.value.replace(/[^\d]/g,'').substr(0,15) 
+    // });
     
   }
 
   addContact = () => {
-   this.props.addContact({ name: this.state.nameValue, phone: this.state.phoneValue});
-   this.setState({
-    nameValue: '',
-    phoneValue: ''
-   });
+    if (this.state.nameValue !== "" || this.state.phoneValue !== "") {
+      this.props.addContact({ name: this.state.nameValue, phone: this.state.phoneValue});
+      this.setState({
+        nameValue: '',
+        phoneValue: ''
+      });
+    }else{
+      alert('Заполните поля!')
+    }
+     
   } 
 
   handleSearch = (e) => {   
@@ -76,8 +85,8 @@ class App extends Component {
       <div className="App">         
         <input type="text" onChange={this.handleSearch} placeholder="search"/>            
         <br/>
-        <input type="text" value={this.state.nameValue} onChange={this.nameChange} />  
-        <input type="text" value={this.state.phoneValue} onChange={this.phoneChange} />
+        <input type="text" value={this.state.nameValue} onChange={this.nameChange} placeholder="name" />  
+        <input type="text" value={this.state.phoneValue} onChange={this.phoneChange} style={{borderColor: this.state.inputError}} placeholder="only digits" />
         <button onClick={this.addContact}>Add contact</button>
         <ul>
           
