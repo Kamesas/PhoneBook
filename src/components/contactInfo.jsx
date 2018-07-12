@@ -65,7 +65,14 @@ class ContactInfo extends Component {
   }
 
   fileUploadHandler = () => {
-    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/helloWorld')
+    const formData = new FormData()
+    formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+    //axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/helloWorld')
+    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/myRequest', formData, {
+    onUploadProgress: progressEvent => {
+      console.log(progressEvent.loaded / progressEvent.total)
+    }
+  })
   }
 
   render() {
@@ -75,7 +82,7 @@ class ContactInfo extends Component {
                     <span> telNum: {this.props.telNum} </span><br/>
 
                     <input type="file" onChange={this.fileSelectedHandler}/>
-                    <button onClick={this.fileUploadHandler}>Upload</button>
+                    <button onClick={this.fileUploadHandler}>Upload</button><br/>
 
                     <button onClick={() => this.handleRemoveClick(this.props.contactId)} >&times;</button>
                     <button onClick={() => this.handleUpdateClick(this.props.contactId, {name: this.props.name, phone: this.props.telNum } )} >Edit</button>                             
