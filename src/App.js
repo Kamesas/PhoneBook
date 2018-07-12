@@ -20,9 +20,19 @@ class App extends Component {
   }
 
   phoneChange = (e) => {
+    // const rexExp = /[^\d]/g;
+    // if (e.target.value.search(rexExp) !== -1) {
+    //   this.setState({
+    //     phoneValue: e.target.value        
+    //   });
+    // }else{
+    //   console.log("не верный номер")
+    // }
+
     this.setState({
-      phoneValue: e.target.value
+      phoneValue: e.target.value.replace(/[^\d]/g,'').substr(0,15) 
     });
+    
   }
 
   addContact = () => {
