@@ -40,11 +40,12 @@ class App extends Component {
   }
 
   addContact = () => {
-    if (this.state.nameValue !== "" || this.state.phoneValue !== "") {
+    if (this.state.nameValue !== "" && this.state.phoneValue !== "") {
       this.props.addContact({ name: this.state.nameValue, phone: this.state.phoneValue});
       this.setState({
         nameValue: '',
-        phoneValue: ''
+        phoneValue: '',
+        inputError: 'initial'
       });
     }else{
       alert('Заполните поля!')
