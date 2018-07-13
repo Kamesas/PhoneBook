@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "busboy": "^0.2.14",
+    "cors": "^2.8.4",
     "firebase": "^5.2.0",
     "lodash": "^4.17.10",
     "react": "^16.4.1",

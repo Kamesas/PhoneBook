@@ -5,6 +5,7 @@
 
 #firebase functions
 /functions/node_modules
+/functions/react-redux-firebase-1-77d47-firebase-adminsdk-somve-384d8cda0a.json
 
 # testing
 /coverage

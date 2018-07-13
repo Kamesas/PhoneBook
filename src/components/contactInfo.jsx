@@ -68,11 +68,12 @@ class ContactInfo extends Component {
     const formData = new FormData()
     formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
     //axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/helloWorld')
-    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/myRequest', formData, {
-    onUploadProgress: progressEvent => {
-      console.log(progressEvent.loaded / progressEvent.total)
-    }
-  })
+    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/uploadFile', formData, {
+      onUploadProgress: progressEvent => {
+        console.log(progressEvent.loaded / progressEvent.total, progressEvent)
+      }    
+    });
+
   }
 
   render() {
