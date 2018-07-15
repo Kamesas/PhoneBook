@@ -3,16 +3,59 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import * as actions from "./actions/actionContacts";
 import ContactInfo from "./components/contactInfo";
+import axios from "axios";
+import {storage} from "./config/firebase";
 
 class App extends Component {
 
-  state = {    
-    nameValue: '',
-    phoneValue: '',
-    searchValue: '',
-    displayContacts: '',
-    inputError: 'initial'
-  } 
+  constructor(){
+    super()
+    this.state = {    
+      nameValue: '',
+      phoneValue: '',
+      searchValue: '',
+      displayContacts: '',
+      inputError: 'initial',
+      fileName: '',
+      imgFireStorage: ''
+    };
+    //this.getImage('I-am2');
+  }
+
+  getImage (image) {    
+    storage.child(`${image}`).getDownloadURL().then((url) => {
+
+      this.setState({
+        imgFireStorage: url
+      });
+      console.log('imgFireStorage1 - ', this.state.imgFireStorage)
+      
+    }).catch((error) => {
+      console.log('error')
+      console.log('imgFireStorage --- ', this.state.imgFireStorage)
+    })
+  }  
+
+  fileSelectedHandler = (e) => {
+    console.log(e.target.files[0]);
+    let nameFile = e.target.files[0].name;
+    this.setState({
+      selectedFile: e.target.files[0],
+      fileName: nameFile
+    }); 
+  }
+
+  fileUploadHandler = () => {
+
+    const formData = new FormData()
+    formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/uploadFile', formData, {
+      onUploadProgress: progressEvent => {
+        console.log(progressEvent.loaded / progressEvent.total, progressEvent)
+      }    
+    });
+
+  }
 
   nameChange = (e) => {
     this.setState({
@@ -41,11 +84,13 @@ class App extends Component {
 
   addContact = () => {
     if (this.state.nameValue !== "" && this.state.phoneValue !== "") {
-      this.props.addContact({ name: this.state.nameValue, phone: this.state.phoneValue});
+      this.props.addContact({ name: this.state.nameValue, phone: this.state.phoneValue, urlImg: this.state.imgFireStorage});
       this.setState({
         nameValue: '',
         phoneValue: '',
-        inputError: 'initial'
+        inputError: 'initial',
+        imgFireStorage: '',
+        fileName: ''
       });
     }else{
       alert('Заполните поля!')
@@ -79,7 +124,7 @@ class App extends Component {
   render() { 
 
     const startListContact = _.map(this.props.contactStore, (value, index) => 
-              <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone}/>         
+              <ContactInfo key={index} contactId={index} name={value.name} telNum={value.phone} avatarUrl={value.urlImg}/>         
             );   
 
     return (
@@ -88,11 +133,13 @@ class App extends Component {
         <br/>
         <input type="text" value={this.state.nameValue} onChange={this.nameChange} placeholder="name" />  
         <input type="text" value={this.state.phoneValue} onChange={this.phoneChange} style={{borderColor: this.state.inputError}} placeholder="only digits" />
+        <input type="file" onChange={this.fileSelectedHandler}/>
+        <button onClick={this.fileUploadHandler}>Upload</button><br/>
+        <button onClick={() => this.getImage (this.state.fileName)}><i>getImage</i></button>
         <button onClick={this.addContact}>Add contact</button>
-        <ul>
-          
-        </ul>
-          { this.state.searchValue === '' ? startListContact : this.state.displayContacts }             
+        <hr/><hr/>
+        
+        { this.state.searchValue === '' ? startListContact : this.state.displayContacts }             
         
       </div>
     );

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { removeContact } from "../actions/actionContacts";
 import { updateContact } from "../actions/actionContacts";
-import axios from "axios";
-import {storage} from "../config/firebase";
+//import axios from "axios";
+//import {storage} from "../config/firebase";
 
 
 class ContactInfo extends Component {
@@ -17,22 +17,22 @@ class ContactInfo extends Component {
       selectedFile: null,
       imgFireStorage: ""  
     }
-    this.getImage('I-am2')
+    //this.getImage('I-am2')
   }
 
- getImage (image) {
-    //let { state } = this
+ /*getImage (image) {    
     storage.child(`${image}.jpg`).getDownloadURL().then((url) => {
-      //this.state.lithuania = url
+
       this.setState({
         imgFireStorage: url
       });
       console.log('imgFireStorage1 - ', this.state.imgFireStorage)
+
     }).catch((error) => {
       console.log('error')
       console.log('imgFireStorage --- ', this.state.imgFireStorage)
     })
-  }  
+  }  */
   
   handleRemoveClick = (removeContact) => {    
     this.props.removeContact(removeContact);
@@ -77,14 +77,14 @@ class ContactInfo extends Component {
    
   };
 
-  fileSelectedHandler = (e) => {
+ /* fileSelectedHandler = (e) => {
     console.log(e.target.files[0]);
     this.setState({
       selectedFile: e.target.files[0] 
     });
-  }
+  }*/
 
-  fileUploadHandler = () => {
+ /* fileUploadHandler = () => {
 
     const formData = new FormData()
     formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
@@ -94,14 +94,15 @@ class ContactInfo extends Component {
       }    
     });
 
-  }
+  }*/
 
   render() {
 
     const start = <p>
                     <span> name: {this.props.name} </span><br/>         
                     <span> telNum: {this.props.telNum} </span><br/>
-                    <img src={ this.state.imgFireStorage } alt="imgFireStorage" />
+                    {/*<img src={ this.state.imgFireStorage } alt="imgFireStorage" />*/}
+                    <img src={this.props.avatarUrl} alt="alt"/>
 
                     <input type="file" onChange={this.fileSelectedHandler}/>
                     <button onClick={this.fileUploadHandler}>Upload</button><br/>
