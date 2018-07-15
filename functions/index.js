@@ -21,7 +21,8 @@ const gcs = require("@google-cloud/storage")(gcconfig);
  response.send("For upload img on Firebase!");
 });*/
 
-exports.onFileChange= functions.storage.object().onFinalize(event => {    
+exports.onFileChange= functions.storage.object().onFinalize(event => { 
+		console.log(event);
     const bucket = event.bucket;
     const contentType = event.contentType;
     const filePath = event.name;
@@ -97,4 +98,5 @@ exports.uploadFile = functions.https.onRequest((req, res) => {
     busboy.end(req.rawBody);
   });
 });
+
 
