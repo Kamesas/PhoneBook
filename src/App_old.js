@@ -48,7 +48,10 @@ class App extends Component {
     }); 
     
     if (nameFile) {
-      console.log('nameFile - ', nameFile);
+
+      console.log('nameFile - ', nameFile);      
+      
+
     }
     
   }
@@ -88,6 +91,10 @@ class App extends Component {
         inputError: 'red'
       });     
     }
+
+    // this.setState({
+    //   phoneValue: e.target.value.replace(/[^\d]/g,'').substr(0,15) 
+    // });
     
   }
 
@@ -139,12 +146,14 @@ class App extends Component {
     return (
       <div className="App">
 
-        <h3>Телефонная книга</h3>
-        <p><strong>(React, Redux, Firebase and SemanticUI)</strong></p>
-        <hr/>
-
-        <Search searchHandle={this.handleSearch} />       
-       
+        <Search searchHandle={this.handleSearch} />                  
+        
+       {/* <input value={this.state.nameValue} onChange={this.nameChange} placeholder="name" />  
+        <input value={this.state.phoneValue} onChange={this.phoneChange} style={{borderColor: this.state.inputError}} placeholder="only digits" />        
+        <input type="file" onChange={this.fileSelectedHandler}/>
+        <button onClick={this.fileUploadHandler}>Загрузить</button><br/>*/}
+       {/* <button onClick={() => this.getImage (this.state.fileName)}><i>getImage</i></button>*/}        
+       {/* <button onClick={this.addContact}>Add contact</button>*/}       
         <AddContact
           nameValue={this.state.nameValue}
           nameChange={this.nameChange}

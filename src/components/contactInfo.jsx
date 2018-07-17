@@ -2,38 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { removeContact } from "../actions/actionContacts";
 import { updateContact } from "../actions/actionContacts";
-//import axios from "axios";
-//import {storage} from "../config/firebase";
+import ButtonurlImg from "./button";
+import ContactEdit from './ContactEdit';
+import { Button, Image, List, Icon, Checkbox, Form } from 'semantic-ui-react';
+import Contact from './Contact'
 
 
 class ContactInfo extends Component {
 
-  constructor(){
-    super()
-    this.state = {
-      edit: false,
-      nameEdit: "",
-      phoneEdit: "",
-      selectedFile: null,
-      imgFireStorage: ""  
-    }
-    //this.getImage('I-am2')
+  state = {
+    edit: false,
+    nameEdit: "",
+    phoneEdit: "",
+    selectedFile: null,
+    imgFireStorage: ""  
   }
-
- /*getImage (image) {    
-    storage.child(`${image}.jpg`).getDownloadURL().then((url) => {
-
-      this.setState({
-        imgFireStorage: url
-      });
-      console.log('imgFireStorage1 - ', this.state.imgFireStorage)
-
-    }).catch((error) => {
-      console.log('error')
-      console.log('imgFireStorage --- ', this.state.imgFireStorage)
-    })
-  }  */
-  
+ 
+ 
   handleRemoveClick = (removeContact) => {    
     this.props.removeContact(removeContact);
   };
@@ -77,54 +62,49 @@ class ContactInfo extends Component {
    
   };
 
- /* fileSelectedHandler = (e) => {
-    console.log(e.target.files[0]);
-    this.setState({
-      selectedFile: e.target.files[0] 
-    });
-  }*/
-
- /* fileUploadHandler = () => {
-
-    const formData = new FormData()
-    formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
-    axios.post('https://us-central1-react-redux-firebase-1-77d47.cloudfunctions.net/uploadFile', formData, {
-      onUploadProgress: progressEvent => {
-        console.log(progressEvent.loaded / progressEvent.total, progressEvent)
-      }    
-    });
-
-  }*/
-
   render() {
 
-    const start = <p>
-                    <span> name: {this.props.name} </span><br/>         
-                    <span> telNum: {this.props.telNum} </span><br/>
-                    {/*<img src={ this.state.imgFireStorage } alt="imgFireStorage" />*/}
+    const start = <div>
+                    <span> name: {this.props.name} </span><br/>                          
+                    <span> telNum: {this.props.telNum} </span><br/>                   
                     <img src={this.props.avatarUrl} alt="alt"/>
 
                     <input type="file" onChange={this.fileSelectedHandler}/>
                     <button onClick={this.fileUploadHandler}>Upload</button><br/>
                     <button onClick={this.urlImg}>urlImg</button>
-
+                    
                     <button onClick={() => this.handleRemoveClick(this.props.contactId)} >&times;</button>
                     <button onClick={() => this.handleUpdateClick(this.props.contactId, {name: this.props.name, phone: this.props.telNum } )} >Edit</button>                             
-                  </p>;
+                  </div>;
+
     const editInputs = <div>
-                        <input type="text" name="name" value={this.state.nameEdit} onChange={this.nameEditChange} />
-                        <input type="tel" name="tel" value={this.state.phoneEdit} onChange={this.phoneEditChange} />
-                        <button onClick={this.handleSave}>Save</button> 
+                        <input value={this.state.nameEdit} onChange={this.nameEditChange} />                          
+                        <input value={this.state.phoneEdit} onChange={this.phoneEditChange} />
+                        <button onClick={this.handleSave}>Save</button>                        
                       </div>;
 
+    const editScreen = <ContactEdit
+                          nameValue={this.state.nameEdit}
+                          nameEditChange={this.nameEditChange}
+                          phoneValue={this.state.phoneEdit}
+                          phoneEditChange={this.phoneEditChange}
+                          btnSave={this.handleSave}
+                       />
+
+    const startScreen = <Contact
+                          nameContact={this.props.name}
+                          avatarUrl={this.props.avatarUrl}
+                          telNum={this.props.telNum}
+                          remove={() => this.handleRemoveClick(this.props.contactId)}
+                          update={() => this.handleUpdateClick(this.props.contactId, {name: this.props.name, phone: this.props.telNum } )}
+                        />
+
     return (
-      <div>
+      <div>      
 
-        { !this.state.edit ? start : editInputs }                
-        <hr/>  
-
-       
-
+        { !this.state.edit ? startScreen : editScreen }                
+        <hr/>   
+        
       </div>
     );
   }

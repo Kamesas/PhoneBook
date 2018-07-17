@@ -7,7 +7,6 @@ import reduxThunk from "redux-thunk";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./reducers/";
-//import 'semantic-ui-css/semantic.min.css';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(reduxThunk)));
 
